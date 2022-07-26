@@ -23,18 +23,22 @@ class App extends Component {
         from: '',
         to: ''
       },
-      experience: {
+      experience: [
+        {
         position: '',
         company: '',
         city: '',
         from: '',
         to: ''
-      },
+        }
+        ],
       edit: true
     }
 
     this.handleChange = this.handleChange.bind(this);
     this.changeEditMode = this.changeEditMode.bind(this);
+    this.addExperience = this.addExperience.bind(this);
+    this.deleteExperience = this.deleteExperience.bind(this);
   }
 
   handleChange(event) {
@@ -86,7 +90,7 @@ class App extends Component {
     }
 
     if (elem.classList.contains('experience')) {
-      prop = this.state.experience;
+      prop = this.state.experience[parseInt(event.target.dataset.index)];
       switch(elem.id) {
         case 'experience-position':
           prop.position = value;
@@ -106,6 +110,7 @@ class App extends Component {
         default:
           prop.position = value;
       }
+
     }
 
     this.setState({prop});
@@ -127,16 +132,51 @@ class App extends Component {
     })
   }
 
+  addExperience(event) {
+    event.preventDefault();
+    const obj = {position: '', 
+                company: '', 
+                city: '', 
+                from: '', 
+                to: ''};
+    this.setState((prevState) => (
+      {
+        generalInfo: prevState.generalInfo,
+        education: prevState.education,
+        experience: prevState.experience.concat(obj),
+        edit: prevState.edit
+      }
+    ))
+  }
+
+  deleteExperience(event) {
+    event.preventDefault();
+    let index = parseInt(event.target.id);
+    console.log(index);
+    if(index > 0) {
+      this.setState((prevState) => (
+        {
+          generalInfo: prevState.generalInfo,
+          education: prevState.education,
+          experience: prevState.experience.filter((elem, idx) => idx !== index),
+          edit: prevState.edit
+        }
+      ))
+    }
+    
+  }
+
   render() {
     const edit = this.state.edit;
+    const { generalInfo, education, experience } = this.state;
     if (edit) {
       return (
         <div className='app'>
           <Title />
           <form>
-            <GeneralInfo handleChange={this.handleChange} edit={edit} state={this.state.generalInfo} group="general"/>
-            <Education handleChange={this.handleChange} edit={edit} state={this.state.education} group="education"/>
-            <Experience handleChange={this.handleChange} edit={edit} state={this.state.experience} group="experience"/>
+            <GeneralInfo handleChange={this.handleChange} edit={edit} state={generalInfo} group="general"/>
+            <Education handleChange={this.handleChange} edit={edit} state={education} group="education"/>
+            <Experience handleChange={this.handleChange} edit={edit} state={experience} group="experience" addExperience={this.addExperience} deleteExperience={this.deleteExperience}/>
             <button className="submit-button" type="submit" onClick={this.changeEditMode}>Submit</button>
           </form>
         </div>

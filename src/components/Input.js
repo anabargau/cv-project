@@ -3,12 +3,12 @@ import React, { Component } from 'react';
 class Input extends Component {
 
     render() {
-        const { name, onChange, edit, value, group } = this.props;
+        const { name, onChange, edit, value, group, index } = this.props;
         if (edit) {
             return (
                 <div className="input-container">
                     <label>{name}</label>
-                    <input type="text" onChange={onChange} value={value} className={group} id={group + '-' + name.split(' ').join('-').toLowerCase()}></input>
+                    <input type="text" onChange={onChange} value={value} className={group} id={group + '-' + name.split(' ').join('-').toLowerCase()} data-index={index}></input>
                 </div>
             )
         } else {

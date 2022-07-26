@@ -14,7 +14,7 @@ class Preview extends Component {
             <GeneralInfo edit={edit} state={generalInfo}/>
             <Education edit={edit} state={education} />
             <Experience edit={edit} state={experience} />
-            <button onClick={this.props.handleClick}>Edit</button>
+            <button className="edit-button" onClick={this.props.handleClick}>Edit</button>
         </div>
     )
   }  
