@@ -9,7 +9,7 @@ class Preview extends Component {
     const { edit } = this.props.state;
     const { generalInfo, education, experience } = this.props.state;
     return (
-        <div>
+        <div className="app">
             <Title />
             <GeneralInfo edit={edit} state={generalInfo}/>
             <Education edit={edit} state={education} />

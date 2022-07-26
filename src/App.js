@@ -131,13 +131,13 @@ class App extends Component {
     const edit = this.state.edit;
     if (edit) {
       return (
-        <div>
+        <div className='app'>
           <Title />
           <form>
             <GeneralInfo handleChange={this.handleChange} edit={edit} state={this.state.generalInfo} group="general"/>
             <Education handleChange={this.handleChange} edit={edit} state={this.state.education} group="education"/>
             <Experience handleChange={this.handleChange} edit={edit} state={this.state.experience} group="experience"/>
-            <button type="submit" onClick={this.changeEditMode}>Submit</button>
+            <button className="submit-button" type="submit" onClick={this.changeEditMode}>Submit</button>
           </form>
         </div>
       ) 
