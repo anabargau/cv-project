@@ -1,11 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Title extends Component {
-    render() {
+function Title() {  
         return(
             <div className='title'>Your CV</div>
-        )
-    }
-}
+        );
+};
 
 export default Title;

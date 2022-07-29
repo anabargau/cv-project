@@ -1,192 +1,176 @@
 import './App.css';
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import GeneralInfo from './components/GeneralInfo';
 import Education from './components/Education';
 import Experience from './components/Experience';
 import Title from './components/Title';
 import Preview from './components/Preview';
 
-class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      generalInfo: {
-        firstName: '',
-        lastName: '',
-        mail: '',
-        phone: ''
-      },
-      education: {
-        school: '',
-        city: '',
-        subject: '',
-        from: '',
-        to: ''
-      },
-      experience: [
-        {
-        position: '',
-        company: '',
-        city: '',
-        from: '',
-        to: ''
-        }
-        ],
-      edit: true
-    }
+function App() {
+  
+  const [generalInfo, setGeneralInfo] = useState({firstName: '',
+                                                    lastName: '',
+                                                    mail: '',
+                                                    phone: ''});
+  const [education, setEducation] = useState({school: '',
+                                                city: '',
+                                                subject: '',
+                                                from: '',
+                                                to: ''});
+  const [experience, setExperience] = useState([{position: '',
+                                                  company: '',
+                                                  city: '',
+                                                  from: '',
+                                                  to: ''}]);
+  const [edit, setEdit] = useState(true);
 
-    this.handleChange = this.handleChange.bind(this);
-    this.changeEditMode = this.changeEditMode.bind(this);
-    this.addExperience = this.addExperience.bind(this);
-    this.deleteExperience = this.deleteExperience.bind(this);
-  }
-
-  handleChange(event) {
+  function handleChange(event) {
     const elem = event.target;
     let value = elem.value;
-    let prop;
     if (elem.classList.contains('general')) {
-      prop = this.state.generalInfo;
       switch(elem.id) {
         case 'general-first-name':
-          prop.firstName = value;
+          setGeneralInfo(generalInfo => ({
+            ...generalInfo,
+            firstName: value
+          }));
           break;
         case 'general-last-name':
-          prop.lastName = value;
+          setGeneralInfo(generalInfo => ({
+            ...generalInfo,
+            lastName: value
+          }));
           break;
         case 'general-mail':
-          prop.mail = value;
+          setGeneralInfo(generalInfo => ({
+            ...generalInfo,
+            mail: value
+          }));
           break;
         case 'general-phone-number':
-          prop.phone = value;
+          setGeneralInfo(generalInfo => ({
+            ...generalInfo,
+            phone: value
+          }));
           break;
         default:
-          prop.firstName = value;
-      }
-    }
+          return 'Id not found';
+      };
+    };
 
     if (elem.classList.contains('education')) {
-      prop = this.state.education;
       switch(elem.id) {
         case 'education-school-name':
-          prop.school = value;
+          setEducation(education => ({
+            ...education,
+            school: value
+          }));
           break;
         case 'education-city':
-          prop.city = value;
+          setEducation(education => ({
+            ...education,
+            city: value
+          }));
           break;
         case 'education-subject':
-          prop.subject = value;
+          setEducation(education => ({
+            ...education,
+            subject: value
+          }));
           break;
         case 'education-from':
-          prop.from = value;
+          setEducation(education => ({
+            ...education,
+            from: value
+          }));
           break;
         case 'education-to':
-          prop.to = value;
+          setEducation(education => ({
+            ...education,
+            to: value
+          }));
           break;
         default:
-          prop.school = value;
-      }
-
-    }
+          return 'Id not found';
+      };
+    };
 
     if (elem.classList.contains('experience')) {
-      prop = this.state.experience[parseInt(event.target.dataset.index)];
+      let idx = parseInt(event.target.dataset.index);
+      let newArray = [...experience];
       switch(elem.id) {
         case 'experience-position':
-          prop.position = value;
+          newArray[idx].position = value;
+          setExperience(newArray);
           break;
         case 'experience-company':
-          prop.company = value;
+          newArray[idx].company = value;
+          setExperience(newArray);
           break;
         case 'experience-city':
-          prop.city = value;
+          newArray[idx].city = value;
+          setExperience(newArray);
           break;
         case 'experience-from':
-          prop.from = value;
+          newArray[idx].from = value;
+          setExperience(newArray);
           break;
         case 'experience-to':
-          prop.to = value;
+          newArray[idx].to = value;
+          setExperience(newArray);
           break;
         default:
-          prop.position = value;
-      }
+          return 'Id not found';
+      };
+    };
+  };
 
-    }
-
-    this.setState({prop});
-
-  }
-
-  changeEditMode(event) {
+  function changeEditMode(event) {
     event.preventDefault();
-    this.setState((prevState) => {
-      if (prevState.edit === true) {
-        return {
-          edit: false
-        }
-      } else {
-        return {
-          edit: true
-        }
-      }
-    })
-  }
+    if (edit === true) {
+      setEdit(false);
+    } else {
+      setEdit(true);
+    };
+    console.log(edit);
+  };
 
-  addExperience(event) {
+  function addExperience(event) {
     event.preventDefault();
     const obj = {position: '', 
                 company: '', 
                 city: '', 
                 from: '', 
                 to: ''};
-    this.setState((prevState) => (
-      {
-        generalInfo: prevState.generalInfo,
-        education: prevState.education,
-        experience: prevState.experience.concat(obj),
-        edit: prevState.edit
-      }
-    ))
-  }
+    let newArray = [...experience];
+    newArray.push(obj);
+    setExperience(newArray);
+  };
 
-  deleteExperience(event) {
+  function deleteExperience(event) {
     event.preventDefault();
     let index = parseInt(event.target.id);
-    console.log(index);
-    if(index > 0) {
-      this.setState((prevState) => (
-        {
-          generalInfo: prevState.generalInfo,
-          education: prevState.education,
-          experience: prevState.experience.filter((elem, idx) => idx !== index),
-          edit: prevState.edit
-        }
-      ))
-    }
-    
-  }
+    let newArray = [...experience];
+    newArray.splice(index, 1);
+    setExperience(newArray);
+    }; 
 
-  render() {
-    const edit = this.state.edit;
-    const { generalInfo, education, experience } = this.state;
-    if (edit) {
-      return (
-        <div className='app'>
-          <Title />
-          <form>
-            <GeneralInfo handleChange={this.handleChange} edit={edit} state={generalInfo} group="general"/>
-            <Education handleChange={this.handleChange} edit={edit} state={education} group="education"/>
-            <Experience handleChange={this.handleChange} edit={edit} state={experience} group="experience" addExperience={this.addExperience} deleteExperience={this.deleteExperience}/>
-            <button className="submit-button" type="submit" onClick={this.changeEditMode}>Submit</button>
-          </form>
-        </div>
-      ) 
-    } else {
-      return (
-        <Preview state={this.state} handleClick={this.changeEditMode}/>
-      )
-    }
-    
-  }
-}
+  if (edit) {
+    return (
+      <div className='app'>
+        <Title />
+        <form>
+          <GeneralInfo handleChange={handleChange} edit={edit} state={generalInfo} group="general"/>
+          <Education handleChange={handleChange} edit={edit} state={education} group="education"/>
+          <Experience handleChange={handleChange} edit={edit} state={experience} group="experience" addExperience={addExperience} deleteExperience={deleteExperience}/>
+          <button className="submit-button" type="submit" onClick={changeEditMode}>Submit</button>
+        </form>
+      </div>
+    ) 
+  } else {
+    return (
+      <Preview generalInfo={generalInfo} education={education} experience={experience} edit={edit} handleClick={changeEditMode}/>
+    )
+  };
+};
 export default App;
