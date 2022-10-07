@@ -1,7 +1,7 @@
 # CV-Creator
 ## What is it?
 This is my first React project. It is a simple app that contains a section to add general information like name, email, phone number, a section to add your educational experience (school name, title of study, date of study) and section to add practical experience (company name, position title, date from and until when you worked for that company). It also contains an add experience button to add multiple experience fields. At the end you can click the Submit button to show a preview of your CV and also an Edit button that gets you back to editing mode.
-The check out button doesn't have any functionality implemented yet.
+
 ## Techonolgies used:
 * React
 * CSS
