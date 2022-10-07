@@ -6,7 +6,6 @@ This is my first React project. It is a simple app that contains a section to ad
 * React
 * CSS
 
-I have used functional React Components and Firebase firestore to store all the photos and all the leaderboard entries.
 ## How to run the app
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). In the project directory, you can run:
 ```
